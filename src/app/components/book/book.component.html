@@ -1,0 +1,48 @@
+<div class="container mt-4" >
+    <div class="container mt-3 d-flex flex-row justify-content-between">
+        <h3>Books Management System</h3>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+            Add New Book
+        </button>
+    </div>
+
+    <!-- Book Table -->
+    <div class="container mt-4">
+        <h5 class="mb-3">All Books</h5>
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>ISBN</th>
+                    <th>Publication Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let book of books">
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.publicationDate | date:'dd-MM-yyyy' }}</td>
+                    <td>
+                        <button class="btn btn-sm me-4  " (click)="selectBook(book)" data-bs-toggle="modal"
+                            data-bs-target="#myModal">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button class="btn btn-sm" (click)="book.id && setDeleteBookId(book.id)" data-bs-toggle="modal"
+                        data-bs-target="#deleteModal">
+                            <i class="bi bi-trash-fill" style="color: red;"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- modal components -->
+<app-book-modal [currentBook]="currentBook" [selectedBook]="selectedBook" (save)="saveBook()"></app-book-modal>
+<app-confirm-modal (confirmDelete)="deleteBook()" ></app-confirm-modal>

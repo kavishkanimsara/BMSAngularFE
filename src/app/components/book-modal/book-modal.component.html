@@ -1,0 +1,91 @@
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel">{{ selectedBook ? 'Edit Book' : 'Add New Book' }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form #bookForm="ngForm" novalidate>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input 
+                            type="text" 
+                            id="title" 
+                            class="form-control" 
+                            [(ngModel)]="currentBook.title" 
+                            name="title" 
+                            required 
+                            #title="ngModel" />
+                        <div *ngIf="title.invalid && title.touched" class="text-danger">
+                            Title is required.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Author</label>
+                        <input 
+                            type="text" 
+                            id="author" 
+                            class="form-control" 
+                            [(ngModel)]="currentBook.author" 
+                            name="author" 
+                            required 
+                            #author="ngModel" />
+                        <div *ngIf="author.invalid && author.touched" class="text-danger">
+                            Author is required.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="isbn" class="form-label">ISBN</label>
+                        <input 
+                            type="text" 
+                            id="isbn" 
+                            class="form-control" 
+                            [(ngModel)]="currentBook.isbn" 
+                            name="isbn" 
+                            required 
+                            minlength="10" 
+                            maxlength="13" 
+                            #isbn="ngModel" />
+                        <div *ngIf="isbn.invalid && isbn.touched" class="text-danger">
+                            ISBN must be 10-13 characters long.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="publicationDate" class="form-label">Publication Date</label>
+                        <input 
+                            type="date" 
+                            id="publicationDate" 
+                            class="form-control" 
+                            [(ngModel)]="currentBook.publicationDate" 
+                            name="publicationDate" 
+                            required 
+                            #publicationDate="ngModel" />
+                        <div *ngIf="publicationDate.invalid && publicationDate.touched" class="text-danger">
+                            Publication date is required.
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button 
+                    type="button" 
+                    class="btn btn-success" 
+                    (click)="saveBook()" 
+                    [disabled]="bookForm.invalid" 
+                    data-bs-dismiss="modal">
+                    {{ selectedBook ? 'Update' : 'Create' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
